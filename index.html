@@ -8,24 +8,45 @@
 
   <meta
     name="description"
-    content="ZapMesh is a fast Windows application for local network communication, direct chat, group chat, file sharing, folder sharing and clipboard sharing."
+    content="ZapMesh is a Windows application for fast local network communication, direct chat, group chat, file sharing, folder sharing and clipboard sharing."
   />
 
+  <meta
+    name="keywords"
+    content="ZapMesh, LAN chat, Windows LAN messenger, local network chat, file sharing, Windows communication"
+  />
+
+  <meta name="author" content="JK Voxane" />
   <meta name="theme-color" content="#121418" />
 
   <style>
     :root {
       --bg: #121418;
-      --bg-soft: #181a20;
-      --bg-card: #1d2027;
+      --bg-soft: #16191f;
+      --panel: #181a20;
+      --panel-2: #1d2027;
+      --panel-3: #22262e;
+
       --border: #2a2e36;
+      --border-soft: #242830;
+
       --blue: #0078d4;
       --blue-hover: #1687e3;
-      --text: #f5f7fa;
-      --muted: #9da4ae;
+      --blue-soft: rgba(0, 120, 212, 0.13);
+      --blue-border: rgba(0, 120, 212, 0.35);
+
       --green: #2ea043;
-      --radius: 14px;
+      --yellow: #d29922;
+      --red: #da3633;
+
+      --text: #f5f7fa;
+      --text-soft: #dce1e7;
+      --muted: #a4abb5;
+      --muted-2: #7e8793;
+
       --max-width: 1180px;
+      --radius: 16px;
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
       --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -40,10 +61,23 @@
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
+      font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        Helvetica,
+        sans-serif;
+      background:
+        radial-gradient(
+          circle at 50% -10%,
+          rgba(0, 120, 212, 0.10),
+          transparent 34%
+        ),
+        var(--bg);
       color: var(--text);
       line-height: 1.6;
+      min-width: 320px;
       overflow-x: hidden;
     }
 
@@ -59,6 +93,11 @@
       transform: translateY(0);
     }
 
+    body::selection {
+      background: rgba(0, 120, 212, 0.35);
+      color: #fff;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
@@ -69,34 +108,46 @@
       display: block;
     }
 
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
     .container {
       width: min(var(--max-width), calc(100% - 40px));
       margin: 0 auto;
     }
 
-    /* NAV */
+    /* =========================
+        NAVIGATION
+    ========================= */
+
     nav {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(18, 20, 24, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(18, 20, 24, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .nav-inner {
-      height: 72px;
+      min-height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 25px;
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 12px;
       font-size: 20px;
       font-weight: 700;
+      letter-spacing: -0.3px;
+      flex-shrink: 0;
     }
 
     .brand img {
@@ -108,13 +159,14 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 26px;
+      gap: 24px;
       color: var(--muted);
       font-size: 14px;
+      font-weight: 500;
     }
 
     .nav-links a {
-      transition: color 0.3s ease;
+      transition: color 0.2s ease;
     }
 
     .nav-links a:hover {
@@ -123,10 +175,12 @@
 
     .nav-download {
       background: var(--blue);
-      color: #fff;
+      color: #fff !important;
       padding: 10px 16px;
-      border-radius: 9px;
+      border-radius: 10px;
       font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 24px rgba(0, 120, 212, 0.18);
       transition: var(--transition);
     }
 
@@ -135,20 +189,28 @@
       transform: translateY(-2px);
     }
 
-    /* HERO */
+    /* =========================
+        HERO
+    ========================= */
+
     .hero {
-      padding: 100px 0 80px;
+      padding: 95px 0 80px;
+    }
+
+    .hero-content {
       text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       padding: 7px 12px;
       border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
       border-radius: 999px;
-      background: var(--bg-soft);
       color: var(--muted);
       font-size: 13px;
       margin-bottom: 24px;
@@ -159,77 +221,100 @@
       height: 8px;
       background: var(--green);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--green);
+      box-shadow: 0 0 0 4px rgba(46, 160, 67, 0.09);
     }
 
-    h1 {
-      max-width: 850px;
+    .hero h1 {
+      max-width: 900px;
       margin: 0 auto;
-      font-size: clamp(42px, 7vw, 76px);
-      line-height: 1.05;
-      letter-spacing: -2px;
+      font-size: clamp(44px, 7vw, 78px);
+      line-height: 1.02;
+      letter-spacing: -3.2px;
+      font-weight: 800;
     }
 
-    .hero p {
-      max-width: 700px;
+    .hero h1 span {
+      color: #5db8ff;
+    }
+
+    .hero-description {
+      max-width: 740px;
       margin: 24px auto 0;
       color: var(--muted);
       font-size: 18px;
+      line-height: 1.7;
     }
 
     .hero-actions {
       margin-top: 34px;
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 14px;
       flex-wrap: wrap;
+      gap: 13px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 13px 21px;
+      gap: 9px;
+      min-height: 46px;
+      padding: 0 20px;
       border-radius: 10px;
-      font-weight: 600;
-      font-size: 15px;
+      font-size: 14px;
+      font-weight: 650;
       border: 1px solid var(--border);
       transition: var(--transition);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
     }
 
     .btn-primary {
       background: var(--blue);
       color: #fff;
       border-color: var(--blue);
+      box-shadow: 0 10px 28px rgba(0, 120, 212, 0.18);
     }
 
     .btn-primary:hover {
       background: var(--blue-hover);
-      transform: translateY(-2px);
+      border-color: var(--blue-hover);
       box-shadow: 0 8px 20px rgba(0, 120, 212, 0.3);
     }
 
     .btn-secondary {
-      background: var(--bg-soft);
+      background: var(--panel);
       color: var(--text);
     }
 
     .btn-secondary:hover {
-      background: var(--bg-card);
-      transform: translateY(-2px);
+      background: var(--panel-2);
     }
 
-    /* SCREENSHOT */
+    .download-note {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted-2);
+    }
+
+    /* =========================
+        SHOWCASE
+    ========================= */
+
     .showcase {
-      margin-top: 70px;
+      margin-top: 66px;
     }
 
     .showcase-frame {
-      background: #0d0f12;
+      background: #0b0d10;
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 12px;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow);
       transition: var(--transition);
     }
 
@@ -238,33 +323,74 @@
       transform: scale(1.01);
     }
 
-    .showcase-frame img {
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid var(--border);
+    .showcase-topbar {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 8px 9px;
     }
 
-    /* SECTIONS */
+    .showcase-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #3a3f48;
+    }
+
+    .showcase-image {
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #101216;
+    }
+
+    .showcase-image img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* =========================
+        GENERIC SECTION
+    ========================= */
+
     section {
-      padding: 90px 0;
+      padding: 96px 0;
     }
 
     .section-heading {
+      max-width: 760px;
+      margin: 0 auto 46px;
       text-align: center;
-      max-width: 720px;
-      margin: 0 auto 48px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: #55b8ff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
     .section-heading h2 {
-      font-size: 38px;
+      font-size: clamp(30px, 4vw, 42px);
+      line-height: 1.12;
+      letter-spacing: -1.3px;
       margin-bottom: 12px;
     }
 
     .section-heading p {
       color: var(--muted);
+      font-size: 16px;
     }
 
-    /* FEATURES */
+    /* =========================
+        FEATURES
+    ========================= */
+
     .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -272,28 +398,36 @@
     }
 
     .feature-card {
-      background: var(--bg-soft);
+      position: relative;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.018),
+        rgba(255, 255, 255, 0)
+      ),
+      var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 26px;
+      min-height: 200px;
       transition: var(--transition);
     }
 
     .feature-card:hover {
-      border-color: var(--blue);
       transform: translateY(-5px);
-      background: var(--bg-card);
+      border-color: rgba(0, 120, 212, 0.42);
+      background: var(--panel-2);
     }
 
     .feature-icon {
       width: 46px;
       height: 46px;
-      border-radius: 12px;
       display: grid;
       place-items: center;
-      background: rgba(0, 120, 212, 0.14);
-      color: #4dabf7;
-      font-size: 22px;
+      border-radius: 13px;
+      background: var(--blue-soft);
+      border: 1px solid var(--blue-border);
+      color: #61bcff;
+      font-size: 21px;
       margin-bottom: 18px;
       transition: var(--transition);
     }
@@ -306,24 +440,71 @@
     .feature-card h3 {
       margin-bottom: 8px;
       font-size: 18px;
+      letter-spacing: -0.2px;
     }
 
     .feature-card p {
       color: var(--muted);
       font-size: 14px;
+      line-height: 1.7;
     }
 
-    /* FREE / PRO */
+    /* =========================
+        HOW IT WORKS
+    ========================= */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 25px;
+      transition: var(--transition);
+    }
+
+    .step:hover {
+      border-color: var(--blue);
+      transform: translateY(-5px);
+    }
+
+    .step-number {
+      color: #61bcff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+
+    .step h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =========================
+        FREE / ACTIVATED
+    ========================= */
+
     .plans {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
-      max-width: 900px;
+      max-width: 930px;
       margin: 0 auto;
     }
 
     .plan {
-      background: var(--bg-soft);
+      position: relative;
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 30px;
@@ -336,74 +517,209 @@
 
     .plan.featured {
       border-color: var(--blue);
+      box-shadow: 0 14px 40px rgba(0, 120, 212, 0.08);
+    }
+
+    .plan-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      border: 1px solid var(--blue-border);
+      color: #61bcff;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 14px;
     }
 
     .plan h3 {
-      font-size: 24px;
-      margin-bottom: 8px;
+      font-size: 25px;
+      letter-spacing: -0.6px;
+      margin-bottom: 7px;
     }
 
-    .plan p {
+    .plan > p {
       color: var(--muted);
       margin-bottom: 20px;
+      font-size: 14px;
     }
 
     .plan ul {
       list-style: none;
+      display: grid;
+      gap: 0;
     }
 
     .plan li {
-      padding: 9px 0;
-      border-bottom: 1px solid var(--border);
-      color: #dce1e7;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-soft);
+      color: var(--text-soft);
+      font-size: 14px;
     }
 
     .plan li:last-child {
       border-bottom: none;
     }
 
-    /* HOW */
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+    .plan li::first-letter {
+      color: var(--green);
     }
 
-    .step {
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
+    /* =========================
+        ACTIVATION
+    ========================= */
+
+    .activation-box {
+      max-width: 930px;
+      margin: 0 auto;
+      padding: 34px;
+      border: 1px solid var(--blue-border);
+      border-radius: 18px;
+      background:
+        radial-gradient(
+          circle at 100% 0%,
+          rgba(0, 120, 212, 0.13),
+          transparent 35%
+        ),
+        var(--panel);
       transition: var(--transition);
     }
 
-    .step:hover {
+    .activation-box:hover {
       border-color: var(--blue);
-      transform: translateY(-5px);
     }
 
-    .step-number {
-      font-size: 13px;
-      color: #4dabf7;
-      margin-bottom: 12px;
-      font-weight: 700;
+    .activation-content {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
     }
 
-    .step h3 {
-      margin-bottom: 8px;
+    .activation-content h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      letter-spacing: -0.7px;
     }
 
-    .step p {
+    .activation-content p {
       color: var(--muted);
       font-size: 14px;
     }
 
-    /* CONTACT */
+    .activation-side {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .activation-status {
+      width: 100%;
+      max-width: 330px;
+      background: rgba(0, 0, 0, 0.14);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .activation-status-label {
+      color: var(--muted-2);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 5px;
+    }
+
+    .activation-status-value {
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .activation-status p {
+      font-size: 13px;
+    }
+
+    /* =========================
+        DOWNLOAD
+    ========================= */
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .download-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: var(--transition);
+    }
+
+    .download-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--blue);
+    }
+
+    .download-card.primary {
+      border-color: var(--blue);
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0, 120, 212, 0.06),
+          transparent
+        ),
+        var(--panel);
+    }
+
+    .download-card h3 {
+      font-size: 23px;
+      margin-bottom: 8px;
+    }
+
+    .download-card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .download-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      border: 1px solid var(--border);
+      background: var(--bg-soft);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 11px;
+    }
+
+    /* =========================
+        SUPPORT
+    ========================= */
+
     .contact-box {
       max-width: 820px;
       margin: 0 auto;
-      padding: 42px;
-      background: var(--bg-soft);
+      padding: 44px;
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(0, 120, 212, 0.08),
+          transparent 45%
+        ),
+        var(--panel);
       border: 1px solid var(--border);
       border-radius: 18px;
       text-align: center;
@@ -414,16 +730,24 @@
       border-color: var(--blue);
     }
 
+    .contact-box h2 {
+      font-size: 34px;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
     .contact-box p {
-      color: var(--muted);
-      margin: 12px auto 24px;
       max-width: 600px;
+      margin: 0 auto 22px;
+      color: var(--muted);
+      font-size: 15px;
     }
 
     .contact-email {
-      color: #4dabf7;
-      font-weight: 600;
+      display: inline-flex;
+      color: #61bcff;
       font-size: 17px;
+      font-weight: 700;
       transition: color 0.3s ease;
     }
 
@@ -432,14 +756,19 @@
       text-decoration: underline;
     }
 
-    /* FOOTER */
+    /* =========================
+        FOOTER
+    ========================= */
+
     footer {
       border-top: 1px solid var(--border);
       padding: 28px 0;
+      margin-top: 20px;
     }
 
     .footer-inner {
       display: flex;
+      align-items: center;
       justify-content: space-between;
       gap: 20px;
       flex-wrap: wrap;
@@ -449,6 +778,7 @@
 
     .footer-links {
       display: flex;
+      align-items: center;
       gap: 18px;
       flex-wrap: wrap;
     }
@@ -457,30 +787,91 @@
       color: var(--text);
     }
 
-    @media (max-width: 900px) {
-      .features-grid,
+    /* =========================
+        RESPONSIVE
+    ========================= */
+
+    @media (max-width: 980px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .steps {
         grid-template-columns: repeat(2, 1fr);
       }
-    }
 
-    @media (max-width: 700px) {
-      .nav-links {
-        display: none;
+      .activation-content {
+        grid-template-columns: 1fr;
       }
 
-      .plans,
-      .features-grid,
-      .steps {
-        grid-template-columns: 1fr;
+      .activation-side {
+        justify-content: flex-start;
+      }
+
+      .activation-status {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav-links {
+        display: none;
       }
 
       .hero {
         padding-top: 70px;
       }
 
-      h1 {
-        letter-spacing: -1px;
+      .hero h1 {
+        letter-spacing: -1.8px;
+      }
+
+      .hero-description {
+        font-size: 16px;
+      }
+
+      .features-grid,
+      .steps,
+      .plans,
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-box {
+        padding: 30px 22px;
+      }
+
+      section {
+        padding: 75px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: min(var(--max-width), calc(100% - 26px));
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .showcase-frame {
+        padding: 7px;
+      }
+
+      .plan,
+      .feature-card,
+      .step,
+      .download-card {
+        padding: 22px;
       }
     }
   </style>
@@ -488,273 +879,777 @@
 
 <body>
 
+  <!-- =========================
+        NAVIGATION
+  ========================= -->
+
   <nav>
     <div class="container nav-inner">
+
       <a href="#" class="brand">
-        <img src="assets/ZapMesh-Logo-Dark.png" alt="ZapMesh">
+        <img
+          src="assets/ZapMesh-Logo-Dark.png"
+          alt="ZapMesh logo"
+        />
         <span>ZapMesh</span>
       </a>
 
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#plans">Free & Activated</a>
+        <a href="#activation">Activation</a>
         <a href="#how">How It Works</a>
         <a href="#support">Support</a>
-        <a href="#download" class="nav-download">Download</a>
+
+        <a
+          href="#download"
+          class="nav-download"
+        >
+          Download
+        </a>
       </div>
+
     </div>
   </nav>
 
+
   <main>
 
-    <section class="hero animate-hidden" id="download">
+    <!-- =========================
+          HERO
+    ========================= -->
+
+    <section class="hero animate-hidden">
+
       <div class="container">
 
-        <div class="badge">
-          <span class="status-dot"></span>
-          Windows Desktop Application
+        <div class="hero-content">
+
+          <div class="badge">
+            <span class="status-dot"></span>
+            Windows Desktop Application
+          </div>
+
+          <h1>
+            Fast communication
+            <span>on your local network.</span>
+          </h1>
+
+          <p class="hero-description">
+            ZapMesh lets Windows users discover nearby devices,
+            chat instantly, create groups, and share files and
+            folders directly over the same Local Area Network.
+          </p>
+
+          <div class="hero-actions">
+
+            <a
+              href="https://github.com/trivoxane/zapmesh/releases/download/v1.0.0/ZapMesh-v1.0.0-Portable.zip"
+              class="btn btn-primary"
+            >
+              Download ZapMesh
+            </a>
+
+            <a
+              href="#features"
+              class="btn btn-secondary"
+            >
+              Explore Features
+            </a>
+
+          </div>
+
+          <div class="download-note">
+            Windows x64 • Portable version • Free to use
+          </div>
+
         </div>
 
-        <h1>Fast communication on your local network.</h1>
 
-        <p>
-          ZapMesh lets Windows users discover nearby devices, chat instantly,
-          create groups, and share files and folders directly over the same LAN.
-        </p>
-
-        <div class="hero-actions">
-         <a
-          href="https://github.com/trivoxane/zapmesh/releases/download/v1.0.0/ZapMesh-v1.0.0-Portable.zip"
-          class="btn btn-primary"
-         >
-          Download ZapMesh
-         </a>         
-          <a href="#features" class="btn btn-secondary">
-            Explore Features
-          </a>
-        </div>
+        <!-- SOFTWARE SCREENSHOT -->
 
         <div class="showcase">
+
           <div class="showcase-frame">
-            <img
-              src="assets/zapmesh-screenshot.png"
-              alt="ZapMesh Windows application"
-            >
+
+            <div class="showcase-topbar">
+              <span class="showcase-dot"></span>
+              <span class="showcase-dot"></span>
+              <span class="showcase-dot"></span>
+            </div>
+
+            <div class="showcase-image">
+
+              <img
+                src="assets/zapmesh-screenshot.png"
+                alt="ZapMesh Windows application interface"
+              />
+
+            </div>
+
           </div>
+
         </div>
 
       </div>
+
     </section>
 
+
+    <!-- =========================
+          FEATURES
+    ========================= -->
+
     <section id="features">
+
       <div class="container">
 
         <div class="section-heading animate-hidden">
-          <h2>Everything you need on your LAN</h2>
+
+          <span class="eyebrow">
+            Core Features
+          </span>
+
+          <h2>
+            Everything you need on your LAN.
+          </h2>
+
           <p>
-            Simple local communication designed for Windows.
+            Simple local communication and sharing,
+            designed specifically for Windows.
           </p>
+
         </div>
+
 
         <div class="features-grid">
 
           <div class="feature-card animate-hidden">
-            <div class="feature-icon">⌁</div>
-            <h3>LAN Discovery</h3>
+
+            <div class="feature-icon">
+              ◌
+            </div>
+
+            <h3>
+              LAN Discovery
+            </h3>
+
             <p>
-              Automatically discover other ZapMesh users connected to the
-              same local network.
+              Automatically discover other ZapMesh users
+              connected to the same local network.
             </p>
+
           </div>
 
-          <div class="feature-card animate-hidden">
-            <div class="feature-icon">💬</div>
-            <h3>Direct Chat</h3>
-            <p>
-              Send instant one-to-one text messages directly between
-              Windows devices.
-            </p>
-          </div>
 
           <div class="feature-card animate-hidden">
-            <div class="feature-icon">👥</div>
-            <h3>Group Chat</h3>
+
+            <div class="feature-icon">
+              💬
+            </div>
+
+            <h3>
+              Direct Chat
+            </h3>
+
             <p>
-              Create group conversations and communicate with multiple
-              users at the same time.
+              Send instant one-to-one text messages
+              directly between Windows devices.
             </p>
+
           </div>
 
-          <div class="feature-card animate-hidden">
-            <div class="feature-icon">📁</div>
-            <h3>File Sharing</h3>
-            <p>
-              Send files directly over your LAN with visible transfer
-              progress.
-            </p>
-          </div>
 
           <div class="feature-card animate-hidden">
-            <div class="feature-icon">🗂</div>
-            <h3>Folder Sharing</h3>
+
+            <div class="feature-icon">
+              👥
+            </div>
+
+            <h3>
+              Group Chat
+            </h3>
+
             <p>
-              Share folders while preserving their internal structure.
+              Create group conversations and communicate
+              with multiple LAN users.
             </p>
+
           </div>
 
-          <div class="feature-card animate-hidden">
-            <div class="feature-icon">📋</div>
-            <h3>Clipboard Sharing</h3>
-            <p>
-              Explicitly share supported clipboard content with another
-              ZapMesh user.
-            </p>
-          </div>
 
           <div class="feature-card animate-hidden">
-            <div class="feature-icon">🟢</div>
-            <h3>Presence Status</h3>
+
+            <div class="feature-icon">
+              📎
+            </div>
+
+            <h3>
+              File Sharing
+            </h3>
+
             <p>
-              Let others know whether you are Online, Busy, Away, or Offline.
+              Send files directly between supported
+              ZapMesh devices with transfer progress.
             </p>
+
           </div>
 
-          <div class="feature-card animate-hidden">
-            <div class="feature-icon">🖥</div>
-            <h3>Windows System Tray</h3>
-            <p>
-              Keep ZapMesh available in the Windows system tray while
-              working in the background.
-            </p>
-          </div>
 
           <div class="feature-card animate-hidden">
-            <div class="feature-icon">🔔</div>
-            <h3>Notifications</h3>
+
+            <div class="feature-icon">
+              📁
+            </div>
+
+            <h3>
+              Folder Sharing
+            </h3>
+
             <p>
-              Receive useful Windows notifications for messages and
-              file-transfer events.
+              Share folders while preserving their
+              internal structure.
             </p>
+
+          </div>
+
+
+          <div class="feature-card animate-hidden">
+
+            <div class="feature-icon">
+              📋
+            </div>
+
+            <h3>
+              Clipboard Sharing
+            </h3>
+
+            <p>
+              Explicitly share supported clipboard content
+              with another ZapMesh user.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card animate-hidden">
+
+            <div class="feature-icon">
+              ●
+            </div>
+
+            <h3>
+              Presence Status
+            </h3>
+
+            <p>
+              Let others know whether you are Online,
+              Busy, Away, or Offline.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card animate-hidden">
+
+            <div class="feature-icon">
+              ▣
+            </div>
+
+            <h3>
+              System Tray
+            </h3>
+
+            <p>
+              Keep ZapMesh available in the Windows
+              system tray while working in the background.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card animate-hidden">
+
+            <div class="feature-icon">
+              ◉
+            </div>
+
+            <h3>
+              Notifications
+            </h3>
+
+            <p>
+              Receive useful Windows notifications for
+              messages and file-transfer events.
+            </p>
+
           </div>
 
         </div>
+
       </div>
+
     </section>
 
+
+    <!-- =========================
+          FREE / ACTIVATED
+    ========================= -->
+
     <section id="plans">
+
       <div class="container">
 
         <div class="section-heading animate-hidden">
-          <h2>Free to use. More features when activated.</h2>
+
+          <span class="eyebrow">
+            Feature Access
+          </span>
+
+          <h2>
+            Free to use. Built for more.
+          </h2>
+
           <p>
-            Core local communication remains available without activation.
+            ZapMesh v1.0.0 is currently available free of charge.
           </p>
+
         </div>
+
 
         <div class="plans">
 
           <div class="plan animate-hidden">
-            <h3>Free</h3>
-            <p>Start using ZapMesh immediately.</p>
+
+            <h3>
+              Free
+            </h3>
+
+            <p>
+              Core LAN communication available without activation.
+            </p>
+
             <ul>
               <li>✓ LAN user discovery</li>
               <li>✓ User search</li>
-              <li>✓ One-to-one chat</li>
+              <li>✓ One-to-one text chat</li>
               <li>✓ User status</li>
               <li>✓ Dark interface</li>
               <li>✓ System tray</li>
             </ul>
+
           </div>
 
+
           <div class="plan featured animate-hidden">
-            <h3>Activated</h3>
-            <p>Unlock the advanced communication features.</p>
+
+            <div class="plan-badge">
+              Future Premium
+            </div>
+
+            <h3>
+              Activated
+            </h3>
+
+            <p>
+              Premium feature access is supported by the application
+              and can be introduced in a future commercial release.
+            </p>
+
             <ul>
-              <li>✓ Everything in Free</li>
               <li>✓ Group chat</li>
               <li>✓ File sharing</li>
               <li>✓ Folder sharing</li>
               <li>✓ Clipboard sharing</li>
             </ul>
+
           </div>
 
         </div>
+
       </div>
+
     </section>
 
-    <section id="how">
+
+    <!-- =========================
+          ACTIVATION
+    ========================= -->
+
+    <section id="activation">
+
       <div class="container">
 
         <div class="section-heading animate-hidden">
-          <h2>How ZapMesh works</h2>
+
+          <span class="eyebrow">
+            Activation
+          </span>
+
+          <h2>
+            Ready for future licensing.
+          </h2>
+
+          <p>
+            ZapMesh already includes secure activation infrastructure,
+            while the current v1.0.0 release remains free to use.
+          </p>
+
+        </div>
+
+
+        <div class="activation-box animate-hidden">
+
+          <div class="activation-content">
+
+            <div>
+
+              <h3>
+                ZapMesh v1.0.0 is free.
+              </h3>
+
+              <p>
+                You can download and use the current release without
+                purchasing an activation key. Premium licensing may be
+                introduced in a future release as the product evolves.
+              </p>
+
+              <div
+                class="hero-actions"
+                style="justify-content:flex-start; margin-top:22px;"
+              >
+
+                <a
+                  href="mailto:trivoxane@gmail.com?subject=ZapMesh%20Activation%20Information"
+                  class="btn btn-secondary"
+                >
+                  Contact Developer
+                </a>
+
+              </div>
+
+            </div>
+
+
+            <div class="activation-side">
+
+              <div class="activation-status">
+
+                <div class="activation-status-label">
+                  Current Release Status
+                </div>
+
+                <div class="activation-status-value">
+                  Free Version
+                </div>
+
+                <p>
+                  No purchase is currently required to use
+                  ZapMesh v1.0.0.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+          HOW IT WORKS
+    ========================= -->
+
+    <section id="how">
+
+      <div class="container">
+
+        <div class="section-heading animate-hidden">
+
+          <span class="eyebrow">
+            Getting Started
+          </span>
+
+          <h2>
+            How ZapMesh works.
+          </h2>
+
           <p>
             No complicated setup for local network communication.
           </p>
+
         </div>
+
 
         <div class="steps">
 
           <div class="step animate-hidden">
-            <div class="step-number">01</div>
-            <h3>Install</h3>
+
+            <div class="step-number">
+              01
+            </div>
+
+            <h3>
+              Install or Extract
+            </h3>
+
             <p>
-              Install ZapMesh on the Windows devices you want to connect.
+              Install ZapMesh normally or use the portable
+              Windows version without installation.
             </p>
+
           </div>
 
-          <div class="step animate-hidden">
-            <div class="step-number">02</div>
-            <h3>Connect to the same LAN</h3>
-            <p>
-              Devices should be connected to the same Wi-Fi or Ethernet network.
-            </p>
-          </div>
 
           <div class="step animate-hidden">
-            <div class="step-number">03</div>
-            <h3>Discover</h3>
+
+            <div class="step-number">
+              02
+            </div>
+
+            <h3>
+              Connect to the Same LAN
+            </h3>
+
             <p>
-              ZapMesh automatically discovers available users on the network.
+              Connect the Windows devices to the same
+              Wi-Fi or Ethernet network.
             </p>
+
           </div>
 
+
           <div class="step animate-hidden">
-            <div class="step-number">04</div>
-            <h3>Communicate</h3>
+
+            <div class="step-number">
+              03
+            </div>
+
+            <h3>
+              Discover Nearby Users
+            </h3>
+
             <p>
-              Chat, create groups, and share supported files and content.
+              ZapMesh automatically discovers available
+              ZapMesh devices on the local network.
             </p>
+
+          </div>
+
+
+          <div class="step animate-hidden">
+
+            <div class="step-number">
+              04
+            </div>
+
+            <h3>
+              Start Communicating
+            </h3>
+
+            <p>
+              Chat directly, create groups, and share
+              supported files and content.
+            </p>
+
           </div>
 
         </div>
+
       </div>
+
     </section>
 
+
+    <!-- =========================
+          DOWNLOAD
+    ========================= -->
+
+    <section id="download">
+
+      <div class="container">
+
+        <div class="section-heading animate-hidden">
+
+          <span class="eyebrow">
+            Download
+          </span>
+
+          <h2>
+            Get ZapMesh for Windows.
+          </h2>
+
+          <p>
+            The current public release is available as a portable
+            Windows x64 package.
+          </p>
+
+        </div>
+
+
+        <div class="download-grid">
+
+          <div class="download-card primary animate-hidden">
+
+            <h3>
+              ZapMesh Portable
+            </h3>
+
+            <p>
+              No installation required. Download, extract,
+              and run ZapMesh.App.exe.
+            </p>
+
+            <div class="download-meta">
+
+              <span class="tag">
+                Windows x64
+              </span>
+
+              <span class="tag">
+                v1.0.0
+              </span>
+
+              <span class="tag">
+                Portable
+              </span>
+
+              <span class="tag">
+                Free
+              </span>
+
+            </div>
+
+            <a
+              href="https://github.com/trivoxane/zapmesh/releases/download/v1.0.0/ZapMesh-v1.0.0-Portable.zip"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener"
+            >
+              Download Portable ZIP
+            </a>
+
+          </div>
+
+
+          <div class="download-card animate-hidden">
+
+            <h3>
+              Installation Version
+            </h3>
+
+            <p>
+              A traditional Windows installer is planned for
+              the public distribution flow.
+            </p>
+
+            <div class="download-meta">
+
+              <span class="tag">
+                Windows x64
+              </span>
+
+              <span class="tag">
+                Installer
+              </span>
+
+              <span class="tag">
+                Coming Soon
+              </span>
+
+            </div>
+
+            <span
+              class="btn btn-secondary"
+              style="opacity:0.6; cursor:default;"
+            >
+              Installer Coming Soon
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+          SUPPORT
+    ========================= -->
+
     <section id="support">
+
       <div class="container">
 
         <div class="contact-box animate-hidden">
-          <h2>Need help or have an idea?</h2>
+
+          <span class="eyebrow">
+            Feedback & Support
+          </span>
+
+          <h2>
+            Help shape the next version.
+          </h2>
 
           <p>
-            Send feedback, report a problem, or suggest a feature for a
-            future version of ZapMesh.
+            Found a problem, have an idea, or want to suggest
+            a feature for a future version of ZapMesh?
+            Contact the developer directly.
           </p>
 
-          <a
-            href="mailto:trivoxane@gmail.com?subject=ZapMesh%20Support"
-            class="contact-email"
+          <div
+            class="hero-actions"
+            style="margin-top:22px;"
           >
-            trivoxane@gmail.com
-          </a>
+
+            <a
+              href="mailto:trivoxane@gmail.com?subject=ZapMesh%20Feedback"
+              class="btn btn-primary"
+            >
+              Send Feedback
+            </a>
+
+            <a
+              href="mailto:trivoxane@gmail.com?subject=ZapMesh%20Feature%20Request"
+              class="btn btn-secondary"
+            >
+              Request a Feature
+            </a>
+
+          </div>
+
+          <div style="margin-top:20px;">
+            <a
+              href="mailto:trivoxane@gmail.com"
+              class="contact-email"
+            >
+              trivoxane@gmail.com
+            </a>
+          </div>
+
         </div>
 
       </div>
+
     </section>
+
 
   </main>
 
+
+  <!-- =========================
+        FOOTER
+  ========================= -->
+
   <footer>
+
     <div class="container footer-inner">
 
       <div>
@@ -762,12 +1657,27 @@
       </div>
 
       <div class="footer-links">
-        <a href="privacy.html">Privacy</a>
-        <a href="license.html">License</a>
-        <a href="mailto:trivoxane@gmail.com">Contact</a>
+
+        <a href="privacy.html">
+          Privacy
+        </a>
+
+        <a href="license.html">
+          License
+        </a>
+
+        <a href="#activation">
+          Activation
+        </a>
+
+        <a href="mailto:trivoxane@gmail.com">
+          Contact
+        </a>
+
       </div>
 
     </div>
+
   </footer>
 
   <script>
@@ -781,7 +1691,7 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-visible');
-          observer.unobserve(entry.target); // Animate only once
+          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
