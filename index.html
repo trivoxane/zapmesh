@@ -26,6 +26,7 @@
       --green: #2ea043;
       --radius: 14px;
       --max-width: 1180px;
+      --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * {
@@ -43,6 +44,19 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Scroll Animations Initial State */
+    .animate-hidden {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: var(--transition);
+    }
+
+    .animate-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     a {
@@ -99,6 +113,10 @@
       font-size: 14px;
     }
 
+    .nav-links a {
+      transition: color 0.3s ease;
+    }
+
     .nav-links a:hover {
       color: var(--text);
     }
@@ -109,10 +127,12 @@
       padding: 10px 16px;
       border-radius: 9px;
       font-weight: 600;
+      transition: var(--transition);
     }
 
     .nav-download:hover {
       background: var(--blue-hover);
+      transform: translateY(-2px);
     }
 
     /* HERO */
@@ -139,6 +159,7 @@
       height: 8px;
       background: var(--green);
       border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
     }
 
     h1 {
@@ -173,7 +194,7 @@
       font-weight: 600;
       font-size: 15px;
       border: 1px solid var(--border);
-      transition: 0.2s ease;
+      transition: var(--transition);
     }
 
     .btn-primary {
@@ -184,6 +205,8 @@
 
     .btn-primary:hover {
       background: var(--blue-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 120, 212, 0.3);
     }
 
     .btn-secondary {
@@ -193,6 +216,7 @@
 
     .btn-secondary:hover {
       background: var(--bg-card);
+      transform: translateY(-2px);
     }
 
     /* SCREENSHOT */
@@ -206,6 +230,12 @@
       border-radius: 18px;
       padding: 12px;
       box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+      transition: var(--transition);
+    }
+
+    .showcase-frame:hover {
+      border-color: var(--blue);
+      transform: scale(1.01);
     }
 
     .showcase-frame img {
@@ -246,6 +276,13 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 26px;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-5px);
+      background: var(--bg-card);
     }
 
     .feature-icon {
@@ -258,6 +295,12 @@
       color: #4dabf7;
       font-size: 22px;
       margin-bottom: 18px;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover .feature-icon {
+      background: var(--blue);
+      color: #fff;
     }
 
     .feature-card h3 {
@@ -284,6 +327,11 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 30px;
+      transition: var(--transition);
+    }
+
+    .plan:hover {
+      transform: translateY(-5px);
     }
 
     .plan.featured {
@@ -326,6 +374,12 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 24px;
+      transition: var(--transition);
+    }
+
+    .step:hover {
+      border-color: var(--blue);
+      transform: translateY(-5px);
     }
 
     .step-number {
@@ -353,6 +407,11 @@
       border: 1px solid var(--border);
       border-radius: 18px;
       text-align: center;
+      transition: var(--transition);
+    }
+
+    .contact-box:hover {
+      border-color: var(--blue);
     }
 
     .contact-box p {
@@ -365,6 +424,12 @@
       color: #4dabf7;
       font-weight: 600;
       font-size: 17px;
+      transition: color 0.3s ease;
+    }
+
+    .contact-email:hover {
+      color: var(--blue-hover);
+      text-decoration: underline;
     }
 
     /* FOOTER */
@@ -442,7 +507,7 @@
 
   <main>
 
-    <section class="hero" id="download">
+    <section class="hero animate-hidden" id="download">
       <div class="container">
 
         <div class="badge">
@@ -461,9 +526,9 @@
          <a
           href="https://github.com/trivoxane/zapmesh/releases/download/v1.0.0/ZapMesh-v1.0.0-Portable.zip"
           class="btn btn-primary"
-          >
+         >
           Download ZapMesh
-        </a>          
+         </a>         
           <a href="#features" class="btn btn-secondary">
             Explore Features
           </a>
@@ -484,7 +549,7 @@
     <section id="features">
       <div class="container">
 
-        <div class="section-heading">
+        <div class="section-heading animate-hidden">
           <h2>Everything you need on your LAN</h2>
           <p>
             Simple local communication designed for Windows.
@@ -493,7 +558,7 @@
 
         <div class="features-grid">
 
-          <div class="feature-card">
+          <div class="feature-card animate-hidden">
             <div class="feature-icon">⌁</div>
             <h3>LAN Discovery</h3>
             <p>
@@ -502,7 +567,7 @@
             </p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card animate-hidden">
             <div class="feature-icon">💬</div>
             <h3>Direct Chat</h3>
             <p>
@@ -511,7 +576,7 @@
             </p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card animate-hidden">
             <div class="feature-icon">👥</div>
             <h3>Group Chat</h3>
             <p>
@@ -520,7 +585,7 @@
             </p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card animate-hidden">
             <div class="feature-icon">📁</div>
             <h3>File Sharing</h3>
             <p>
@@ -529,7 +594,7 @@
             </p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card animate-hidden">
             <div class="feature-icon">🗂</div>
             <h3>Folder Sharing</h3>
             <p>
@@ -537,7 +602,7 @@
             </p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card animate-hidden">
             <div class="feature-icon">📋</div>
             <h3>Clipboard Sharing</h3>
             <p>
@@ -546,7 +611,7 @@
             </p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card animate-hidden">
             <div class="feature-icon">🟢</div>
             <h3>Presence Status</h3>
             <p>
@@ -554,7 +619,7 @@
             </p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card animate-hidden">
             <div class="feature-icon">🖥</div>
             <h3>Windows System Tray</h3>
             <p>
@@ -563,7 +628,7 @@
             </p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card animate-hidden">
             <div class="feature-icon">🔔</div>
             <h3>Notifications</h3>
             <p>
@@ -579,7 +644,7 @@
     <section id="plans">
       <div class="container">
 
-        <div class="section-heading">
+        <div class="section-heading animate-hidden">
           <h2>Free to use. More features when activated.</h2>
           <p>
             Core local communication remains available without activation.
@@ -588,7 +653,7 @@
 
         <div class="plans">
 
-          <div class="plan">
+          <div class="plan animate-hidden">
             <h3>Free</h3>
             <p>Start using ZapMesh immediately.</p>
             <ul>
@@ -601,7 +666,7 @@
             </ul>
           </div>
 
-          <div class="plan featured">
+          <div class="plan featured animate-hidden">
             <h3>Activated</h3>
             <p>Unlock the advanced communication features.</p>
             <ul>
@@ -620,7 +685,7 @@
     <section id="how">
       <div class="container">
 
-        <div class="section-heading">
+        <div class="section-heading animate-hidden">
           <h2>How ZapMesh works</h2>
           <p>
             No complicated setup for local network communication.
@@ -629,7 +694,7 @@
 
         <div class="steps">
 
-          <div class="step">
+          <div class="step animate-hidden">
             <div class="step-number">01</div>
             <h3>Install</h3>
             <p>
@@ -637,7 +702,7 @@
             </p>
           </div>
 
-          <div class="step">
+          <div class="step animate-hidden">
             <div class="step-number">02</div>
             <h3>Connect to the same LAN</h3>
             <p>
@@ -645,7 +710,7 @@
             </p>
           </div>
 
-          <div class="step">
+          <div class="step animate-hidden">
             <div class="step-number">03</div>
             <h3>Discover</h3>
             <p>
@@ -653,7 +718,7 @@
             </p>
           </div>
 
-          <div class="step">
+          <div class="step animate-hidden">
             <div class="step-number">04</div>
             <h3>Communicate</h3>
             <p>
@@ -668,7 +733,7 @@
     <section id="support">
       <div class="container">
 
-        <div class="contact-box">
+        <div class="contact-box animate-hidden">
           <h2>Need help or have an idea?</h2>
 
           <p>
@@ -704,6 +769,27 @@
 
     </div>
   </footer>
+
+  <script>
+    // Scroll Animation Observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-visible');
+          observer.unobserve(entry.target); // Animate only once
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-hidden').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
 
 </body>
 </html>
